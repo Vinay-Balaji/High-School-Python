@@ -1,0 +1,43 @@
+import sys #library helpful to user for Pin
+#Vinay Balaji
+#ATM Simulator
+#**********************
+loDebitCardNbr = 4444333322221111
+hiDebitCardNbr = 4444333322229999
+storedPin = 1234 #starting file
+v = 0
+#**********************
+Balance = eval(input("Enter Bank Balance ==> "))
+Limit = eval(input("Enter Daily Limit ==> ")) 
+def DebitCard():
+    debit = eval(input("Enter Debit Card Number ==> ")) 
+    if(loDebitCardNbr <= debit <= hiDebitCardNbr):
+        print("Valid Debit Card") 
+    while(loDebitCardNbr > debit > hiDebitCardNbr):
+        print("Invalid Debit Card")
+        debitCard = eval(input("Enter Debit Card Number ==> ")) 
+def pin():
+    Pin_entered = eval(input("Enter PIN "))
+    while(Pin_entered != storedPin):
+        print("Invalid PIN") 
+        v = v + 1
+        if(v >= 3):
+            print("Your account is locked.")
+            print("You have exceeded the 3-try limit.")
+            print("Please contact a bank officer") 
+            sys.exit() #exits sys library
+        Pin_entered = eval(input("Enter PIN ")) 
+    if(Pin_entered == storedPin):
+        print("Valid PIN")
+def withdrawal1():
+    withdrawal2 = eval(input("Enter the withdrawal amount ")) 
+    if(withdrawal2 > Balance or withdrawal2 > Limit):
+        print("Transaction canceled")
+        print("You have insufficient balance or exceeded daily limit")  
+    else:
+        print("Printing receipt")
+        print("Please take your cash") 
+DebitCard()
+pin()
+withdrawal1()
+#******************************
