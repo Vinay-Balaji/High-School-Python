@@ -1,0 +1,32 @@
+#Let it Snow
+from turtle import*
+hideturtle()
+tracer(0,0)
+x = 0 # The x coordinate 
+y = 350 # The y coordinate
+goto(x,y)#Starting value
+def koch(a, order):#Subroutine
+  pendown()
+  if order > 0: #The order in which the snowflake will be drawn 
+    for v in [60, -120, 60, 0]: # Function just like the for in range 
+      koch(a/3 , order-1)
+      left(v)
+  else:
+    forward(a)
+  penup()
+  return()
+#Animation time
+while(True):
+  clear()
+  goto(x,y)
+  fillcolor("sky blue") # Color the snowflake will be 
+  begin_fill() # Starts the fill of the color sky blue
+  for koch_snowflake in range(3):#It is a new command 
+    koch (100,4)#Makes the snowflake move
+    right(120)#Has it move 90 deg in order to be diagonal
+  end_fill()# Finishes sky blue color
+  x = x + 5
+  y = y - 10
+  goto(x,y)#makes the snowflake go to this coordinate from the starting point
+  update()#Neccesitty for animation
+  delay(60)#Delays the function
