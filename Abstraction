@@ -1,0 +1,388 @@
+###############################################################
+# ABSTRACTION 
+# by: VINAY BALAJI
+
+import turtle  ### Used for turtle graphics routines
+from math import *    ### Used for math routines
+from time import *    ### Used for time delay routines
+
+t=turtle.Turtle()
+window=turtle.Screen()
+window.setup(800,800)
+
+##############################################################
+##  These functions are to be called by the student generated functions
+
+
+# Translates the x-coordinate from turtle to graphics.
+def getX(x): 
+  centerX = window.window_width() / 2;
+  return x - centerX;
+
+# Translates the y-coordinate from turtle to graphics. 
+def getY(y):
+  centerY = window.window_height() / 2; 
+  return centerY - y
+  
+# Sets graphics mode to instant display
+# and hides the turtle.   
+def instant():
+  window.tracer(0,0)
+  t.hideturtle()    
+
+# Returns the graphics display to normal turtle
+# drawing mode. 
+def normal():
+  window.tracer(0,0)
+  
+          
+# Draws a single pixel
+# The <circle> command is used to make the pixel visible. 
+def drawPixel(x,y):
+  instant()
+  x = getX(x)
+  y = getY(y)
+  t.penup()
+  t.goto(x,y)
+  t.pendown()
+  t.circle(1)
+  
+# Draws a line from (XCoordinate1,YCoordinate1) to (XCoordinate2,YCoordinate2)   
+def drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2):
+  #instant()
+  XCoordinate1 = getX(XCoordinate1)
+  YCoordinate1 = getY(YCoordinate1)
+  XCoordinate2 = getX(XCoordinate2)
+  YCoordinate2 = getY(YCoordinate2)
+  t.penup()
+  t.goto(XCoordinate1,YCoordinate1)
+  t.pendown()
+  t.goto(XCoordinate2,YCoordinate2)
+
+# Draws a rectangle from top-left (XCoordinate1,YCoordinate1) 
+# to bottom-right (XCoordinate2,YCoordinate2)   
+def drawRect(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2):
+  drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate1)
+  drawLine(XCoordinate2,YCoordinate1,XCoordinate2,YCoordinate2)
+  drawLine(XCoordinate2,YCoordinate2,XCoordinate1,YCoordinate2)
+  drawLine(XCoordinate1,YCoordinate2,XCoordinate1,YCoordinate1) 
+  
+# Fills a rectangle from top-left (XCoordinate1,YCoordinate1) 
+# to bottom-right (XCoordinate2,YCoordinate2)   
+def fillRect(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2):
+  t.begin_fill()
+  drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate1)
+  drawLine(XCoordinate2,YCoordinate1,XCoordinate2,YCoordinate2)
+  drawLine(XCoordinate2,YCoordinate2,XCoordinate1,YCoordinate2)
+  drawLine(XCoordinate1,YCoordinate2,XCoordinate1,YCoordinate1) 
+  t.end_fill()
+   
+# Draws a circle with center (centerX,centerY) and radius (r).
+def drawCircle(centerX,centerY,r,n):
+  if(n == -1):
+    radian = 0.0
+    startingX = cos(radian) * r + centerX
+    startingY = sin(radian) * r + centerY
+    XCoordinate1 = startingX
+    YCoordinate1 = startingY
+    while radian <= 2 * pi:
+      radian = radian + 0.01
+      XCoordinate2 = cos(radian) * r + centerX
+      YCoordinate2 = sin(radian) * r + centerY
+      drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+      XCoordinate1 = XCoordinate2
+      YCoordinate1 = YCoordinate2
+    drawLine(XCoordinate1,YCoordinate1,startingX,startingY)
+  else:
+    radian = 0.0
+    startingX = cos(radian) * r + centerX
+    startingY = sin(radian) * r + centerY
+    XCoordinate1 = startingX
+    YCoordinate1 = startingY
+    while radian <= 2 * pi:
+      radian = radian + 2 * pi/n
+      XCoordinate2 = cos(radian) * r + centerX
+      YCoordinate2 = sin(radian) * r + centerY
+      drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+      XCoordinate1 = XCoordinate2
+      YCoordinate1 = YCoordinate2
+    drawLine(XCoordinate1,YCoordinate1,startingX,startingY)
+
+  
+# Fills a circle with center (centerX,centerY) and radius (r).
+def fillCircle(centerX,centerY,r,n):
+  if(n == -1):
+    t.begin_fill()
+    radian = 0.0
+    startingX = cos(radian) * r + centerX
+    startingY = sin(radian) * r + centerY
+    XCoordinate1 = startingX
+    YCoordinate1 = startingY
+    while radian < 2 * pi:
+      radian = radian + 0.01
+      XCoordinate2 = cos(radian) * r + centerX
+      YCoordinate2 = sin(radian) * r + centerY
+      drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+      XCoordinate1 = XCoordinate2
+      YCoordinate1 = YCoordinate2
+    drawLine(XCoordinate1,YCoordinate1,startingX,startingY)
+    t.end_fill()
+  else:
+    t.begin_fill()
+    radian = 0.0
+    startingX = cos(radian) * r + centerX
+    startingY = sin(radian) * r + centerY
+    XCoordinate1 = startingX
+    YCoordinate1 = startingY
+    while radian <= 2 * pi:
+      radian = radian + 2 * pi/n
+      XCoordinate2 = cos(radian) * r + centerX
+      YCoordinate2 = sin(radian) * r + centerY
+      drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+      XCoordinate1 = XCoordinate2
+      YCoordinate1 = YCoordinate2
+    drawLine(XCoordinate1,YCoordinate1,startingX,startingY)
+    t.end_fill()
+
+
+
+################################################################################
+###                             STUDENT WORK AREA
+################################################################################
+
+################################################################################
+### BELOW THESE LINES ARE PROCEDURES <drawString1> and
+### <drawString2>. The two procedures need to be rewritten into one
+### general drawString procedure that can handle the parameters of
+### both <drawString1> and <drawString2>.
+################################################################################
+
+# This <drawString1> procedure displays a graphics string at the (x,y) position.
+def drawString1(x,y,output):
+  window.tracer(0,0)
+  t.penup()
+  t.setpos(x,y)
+  t.write(output)  
+   
+   
+# This <drawString2> procedure displays a graphics string at the
+# (x,y) position with <face>, <font> and <style> information.   
+def drawString2(x,y,output,face,size,style):
+  t.hideturtle()
+  window.tracer(0,0)
+  t.penup()
+  t.setpos(x,y)
+  t.write(output,font=(face,size,style))
+
+
+
+### SOLUTION TO CHANGE THE  <drawString> PROCEDURES INTO A SINGLE PROCEDURE.
+## HINT: all parameters are passed to the subroutine via a list
+
+parameters = []
+def drawString(parameters):
+  t.hideturtle()
+  window.tracer(0,0)
+  t.penup()
+  if(len(parameters) == 6):
+    x = parameters[0]
+    y = parameters[1]
+    output = parameters[2]
+    face = parameters[3]
+    size = parameters[4]
+    style = parameters[5]
+    t.setpos(x,y)
+    t.write(output,font=(face,size,style))
+  elif(len(parameters) == 3):
+    x = parameters[0]
+    y = parameters[1]
+    output = parameters[2]
+    t.setpos(x,y)
+    t.write(output)  
+###################################################################################
+###              SOLUTIONS FOR 6 COMMANDS  
+###################################################################################
+
+# This procedure draws an oval with center (centerX,centerY) 
+# and horizontal radius (hR) and vertical radius (vR).
+def drawOval(centerX,centerY,hR,vR):
+  radian = 0.0#this was given in the starting file so I was forced to use it in the code
+  startingX = cos(radian) * hR + centerX#this was already given in the starting file 
+  startingY = sin(radian) * vR + centerY#already given in the starting file
+  XCoordinate1 = startingX#I am saying that the first x coordinate is the same as the starting x coordinate
+  YCoordinate1 = startingY# I am saying that the first y coordinate is the same as the starting y coordinate.
+  while radian < 2 * pi:#this is derived from the circle formula
+    #radian = radian 
+    XCoordinate2 = cos(radian) * hR + centerX #this was given in the starting file
+    YCoordinate2 = sin(radian) * vR + centerY#this was given in the starting file 
+    drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+    XCoordinate1 = XCoordinate2# this is saying that the first x coordinate goes to the second x coordinate
+    YCoordinate1 = YCoordinate2#this is saying that the first y coordinate goes the the second y coordinate
+    radian = radian + 0.2
+  drawLine(XCoordinate1,YCoordinate1,startingX,startingY)
+# the drawLine function basically allows you to draw the visible line that will be seen in the output
+  
+
+# This procedure fills an oval with center (centerX,centerY) 
+# and horizontal radius (hR) and vertical radius (vR).
+def fillOval(centerX,centerY,hR,vR):#this is the function given in the starting file 
+  t.begin_fill()#this function is used in turtle and is used to begin the color fill
+  radian = 0.0#this was given in the starting file so I was forced to use it in the code
+  startingX = cos(radian) * hR + centerX#this was already given in the starting file 
+  startingY = sin(radian) * vR + centerY#already given in the starting file
+  XCoordinate1 = startingX#I am saying that the first x coordinate is the same as the starting x coordinate
+  YCoordinate1 = startingY# I am saying that the first y coordinate is the same as the starting y coordinate.
+  while radian < 2 * pi:#this is derived from the circle formula
+    #radian = radian 
+    XCoordinate2 = cos(radian) * hR + centerX #this was given in the starting file
+    YCoordinate2 = sin(radian) * vR + centerY#this was given in the starting file 
+    drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+    XCoordinate1 = XCoordinate2# this is saying that the first x coordinate goes to the second x coordinate
+    YCoordinate1 = YCoordinate2#this is saying that the first y coordinate goes the the second y coordinate
+    radian = radian + 0.2
+  drawLine(XCoordinate1,YCoordinate1,startingX,startingY)
+  t.end_fill()#ends the color fill so no more black will appear after this program segment unless if it is called upon in a future program segment. 
+
+
+# This procedure draws a regular polygon at (centerX,centerY),
+# with (r) radius pixels from the center and (n) # of sides. 
+def drawRegPoly(centerX,centerY,r,n):
+  radian = 0.0#I am setting the radian to (0,0)
+  startingX = cos(radian) * r + centerX
+  startingY = sin(radian) * r + centerY
+  XCoordinate1 = startingX#the first x coordinate is the starting x coordinate 
+  YCoordinate1 = startingY#the first y coordinate is the starting y coordinate
+  while radian < 2 * pi:#In a Unit Circle the circle will not continue past 2pi
+    XCoordinate2 = cos(radian) * r + centerX# I used this function when creating the ovals
+    YCoordinate2 = sin(radian) * r + centerY#I used this functions when creating the ovals
+    drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+    XCoordinate1 = XCoordinate2#Goes from one point to the other...
+    YCoordinate1 = YCoordinate2#Goes from one point to the other...
+    radian = radian + ((2 * pi)/n)#2pi/n is the formula that is used to get regular polygoons. Mr Barron showed me this after school on Thursday
+  drawLine(XCoordinate1,YCoordinate1,startingX,startingY)
+
+# This procedure fills a regular polygon at (centerX,centerY),
+# with (r) radius pixels from the center and (n) # of sides. 
+def fillRegPoly(centerX,centerY,r,n):#this code is very similar to th eone above
+  radian = 0.0#used everywhere in the starting file
+  startingX = cos(radian) * r + centerX
+  startY = sin(radian) * r + centerY
+  XCoordinate1 = startingX#the first coordinate is the starting coordinate
+  YCoordinate1 = startY# this first y coordinate is the starting y coordinate
+  t.pendown()
+  t.begin_fill()
+  while radian < 2 * pi:
+    radian = radian + ((2 * pi)/n)
+    XCoordinate2 = cos(radian) * r + centerX
+    YCoordinate2 = sin(radian) * r + centerY
+    drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+    XCoordinate1 = XCoordinate2
+    YCoordinate1 = YCoordinate2
+  drawLine(XCoordinate1,YCoordinate1,startingX,startY)
+  t.end_fill()
+  t.penup()
+
+  #fillCircle(centerX,centerY,r)#this fills the color of the circle to black 
+# This procedure draws an irregular polygon
+# with a tuple of (x,y) coordinate points.
+def drawPoly(points):
+  t.pendown()
+  startingX = points[0][0]#the 0,0 refers to the point on the coordinate plane 
+  startingY = points[0][1]# the 0,1 refres to the point on the coordinate plane
+  XCoordinate1 = startingX#the first x 
+  YCoordinate1 = startingY
+  for n in range(1,len(points)):
+    XCoordinate2 = points[n][0]
+    YCoordinate2 = points[n][1]
+    drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+    XCoordinate1 = XCoordinate2
+    YCoordinate1 = YCoordinate2
+  XCoordinate2 = startingX
+  YCoordinate2 = startingY
+  drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+# This procedure fills an irregular polygon
+# with a tuple of (x,y) coordinate points. 
+def fillPoly(points):
+  t.begin_fill()
+  t.pendown()
+  startingX = points[0][0]#the 0,0 refers to the point on the coordinate plane 
+  startingY = points[0][1]#the 0,1 refers to the starting Y value
+  XCoordinate1 = startingX#The xcoordinate goes to the starting x value
+  YCoordinate1 = startingY#The y coordinate goes the the starting y value
+  for b in range(1,len(points)):
+    XCoordinate2 = points[b][0]
+    YCoordinate2 = points[b][1]
+    drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+    XCoordinate1 = XCoordinate2
+    YCoordinate1 = YCoordinate2
+  XCoordinate2 = startingX
+  YCoordinate2 = startingY
+  drawLine(XCoordinate1,YCoordinate1,XCoordinate2,YCoordinate2)
+  t.end_fill()
+
+#############################################################
+### THIS IS WHERE THE FILES ARE TESTED 
+#############################################################
+
+# Tests the altered drawString procedure.
+drawString([0,0,"HELLO WORLD"])
+drawString([0,200,"ISOLDE ECHLE","Courier",20,"bold"])
+window.update()
+sleep(3)
+t.clear()
+#
+# Tests a drawing oval procedure.
+drawOval(100,200,50,125)
+drawOval(400,200,150,100)
+drawOval(700,200,100,100)
+#
+# TestS a filling oval procedure.
+fillOval(100,500,50,125)
+fillOval(400,500,150,100)
+fillOval(700,500,100,100)
+window.update()
+#
+#normal()
+window.update()
+sleep(3)
+t.clear()
+#
+# Tests a drawing regular polygon procedure.
+drawRegPoly(100,200,100,3)
+drawRegPoly(350,200,100,4)
+drawRegPoly(600,200,100,8)
+#
+# Tests a filling regular polygon procedure.
+fillRegPoly(100,500,100,5)
+fillRegPoly(350,500,100,6)
+fillRegPoly(600,500,100,7)
+#
+#normal()
+window.update()
+sleep(3)
+t.clear()
+#
+# Test a drawing irregular polygon procedure.
+drawPoly(((100,100),(150,100),(150,150),(100,150)))
+drawPoly(((200,200),(400,200),(400,400),(200,400),(300,300)))
+drawPoly(((600,400),(650,450),(650,550),(600,650),(500,650),(400,500),(500,400)))
+#
+#normal()
+window.update()
+sleep(3)
+t.clear()
+#
+# Test a filling irregular polygon procedure.
+fillPoly(((100,100),(150,100),(150,150),(100,150)))
+fillPoly(((200,200),(400,200),(400,400),(200,400),(300,300)))
+fillPoly(((600,400),(650,450),(650,550),(600,650),(500,650),(400,500),(500,400)))
+#
+#normal()
+window.update()
+sleep(3)
+t.clear()
+#
+### update and done are required at the end of a graphics program
+window.update()
+window.done()
+# Rutvik and Mr Barron helped me with this lab because I was struggling with understaning the concept of what the output should be. Thank you guys for your help!
