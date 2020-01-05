@@ -1,0 +1,74 @@
+#/ The "Sieve of Eratosthenes" Program
+# by VINAY BALAJI 
+
+# Function <computePrimes> first creates a list of True elements.
+# Nested loops alter the multiples of any prime number to False.
+def computePrimes(n):
+  print("COMPUTING PRIME NUMBERS\n")
+  numberlist = [1]
+  primelist = ["P"]#Any numbers that are prime will be labeled as P on one list.
+
+# This is the loop 
+#startnum.insert(0,2)
+  for i in range(2,n+1):#This is the loop
+    numberlist.append(i)#adds number to the end of the loop
+    primelist.append("P")#This will be part of one list that basically puts "P" if a number is prime
+  #print (numberlist)
+  #print (primelist)
+  
+  startnum = 2 #This is the startnuming prime number because 1 is technically not a prime number
+  multiples = 2
+  while ((n/startnum) >= 2):
+
+    while ((startnum*multiples) <= n):
+
+      primelist[startnum*multiples-1]="N"
+      multiples = multiples + 1
+
+    multiples = 2 
+    startnum = startnum + 1
+
+  #print (primelist)
+  numPrimes = 0
+  Theprime=[]
+  #added number 2 since its a prime number
+  Theprime.append(2)
+  
+  for i in range(2,len(numberlist)): 
+    
+    if (primelist[i] == "P"):
+      
+      Theprime.append(numberlist[i])
+      numPrimes = numPrimes + 1
+  #since we added 2, I add one more number to the total    
+  print(numPrimes+1," primes found between 1 and ",n)
+  #since we added 2, we need to + 1 in the list
+  R = 0
+  for v in range(numPrimes+1):
+    R = R + 1
+    print(Theprime[v],end =" ")  
+    if(R % 15 == 0):
+      print()  
+#######################################################
+# startnum of main execution loop
+#
+notFinished = True
+while(notFinished):
+  #max = n 
+  #print()
+  n = eval(input("Enter upper bound number: "))
+  max = n 
+  Theprimes = computePrimes(max)
+  #displayPrimes(primes)
+  print()
+  repeat = input("Do you wish to repeat this program [Y/N]? ")
+  if (repeat == "Y"):
+    #print("Hi")
+    notFinished = True 
+  else:
+    notFinished = False 
+    print("Finished")
+    #notFinished = False
+  #print()
+#
+#print("FINISHED")
