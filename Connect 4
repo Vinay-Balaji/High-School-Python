@@ -1,0 +1,189 @@
+#***************************************
+# Vinay Balaji 
+# Connect 4 Code
+# Extra Credit
+#****************************************
+global Player1Win
+global Player2Win
+Player1Win = False
+Player2Win = False
+#*********************
+from turtle import*
+tracer(0,0)
+#********************
+
+#Make Gameboard
+def create_game_board():
+  numrows=6
+  numcols=7
+  rectwidth= numcols*100+20*(numcols+1)
+  rectheight=numrows*100+20*(numrows+1)
+  xoffset = rectwidth//2
+  yoffset = rectheight//2
+  for row in range (6):
+    for col in range (7):     
+      xcoord = col*120+70
+      ycoord = row*120+20
+      pu()
+      goto(xcoord-xoffset,ycoord-yoffset)
+      pd()
+      circle(50)
+  pu()
+  goto(0-xoffset,0-yoffset)
+  pd()
+  for i in range(2):
+    forward(rectwidth)
+    left(90)
+    fd(rectheight)
+    left(90)
+  pu()
+  update()
+  return()
+    
+
+
+
+#Horizontal
+def check_horizontal_win(gamestate,Player1Win,Player2Win):
+  for col in range (4):
+    for row in range (6):
+      if (gamestate[col][row]==gamestate[col+1][row] and gamestate[col][row]==gamestate[col+2][row] and gamestate[col][row]==gamestate[col+3][row] == 1):
+        Player1Win=True 
+
+      elif  (gamestate[col][row]==gamestate[col+1][row] and gamestate[col][row]==gamestate[col+2][row] and gamestate[col][row]== gamestate[col+3][row]== 2):
+        Player2Win=True
+  return(Player1Win,Player2Win)
+
+#Vertical
+def check_win_vert(gamestate,Player1Win,Player2Win):
+  for row in range(3):
+    for col in range(7):
+      if (gamestate[col][row] == gamestate[col][row + 1] == 1 and gamestate[col][row + 1] == gamestate[col][row + 2] == 1 and gamestate[col][row + 2] == gamestate[col][row + 3] == 1):
+        Player1Win = True
+      elif (gamestate[col][row] == gamestate[col][row + 1] == 2 and gamestate[col][row + 1] == gamestate[col][row + 2] == 2 and gamestate[col][row + 2] == gamestate[col][row + 3] == 2):
+        Player2Win = True
+  return(Player1Win,Player2Win)
+
+def FourInARowDownRight(gamestate,Player1Win,Player2Win):
+  for row in range (3):
+    for col in range (1,3):
+      if (gamestate[row][col]== gamestate[row+1][col-1] and gamestate[row][col]== gamestate[row+2][col-2] and gamestate[row][col]== gamestate[row+3][col-3] and gamestate[row][col]==1):
+        Player1Win=True
+      elif(gamestate[row][col]== gamestate[row+1][col-1] and gamestate[row][col]== gamestate[row+2][col-2] and gamestate[row][col]== gamestate[row+3][col-3] and gamestate[row][col]==2):
+        Player2Win=True
+  return (Player1Win,Player2Win)
+
+
+
+def FourInARowDownLeft(gamestate,Player1Win,Player2Win):
+  for col in range (4):
+    for row in range (3,6):
+      if (gamestate[col][row]== gamestate[col+1][row-1] and gamestate[col][row]== gamestate[col+2][row-2] and gamestate[col][row]== gamestate[col+3][row-3] and gamestate[col][row]==1):
+        Player1Win=True
+      elif(gamestate[col][row]== gamestate[col+1][row-1] and gamestate[col][row]== gamestate[col+2][row-2] and gamestate[col][row]== gamestate[col+3][row-3] and gamestate[col][row]==2):
+        Player2Win=True
+  return (Player1Win,Player2Win)
+
+
+
+def droppiece(ColumnSelected):
+  print(ColumnSelected)
+  for row in range (6):
+    if gamestate[ColumnSelected][row] ==0:
+      gamestate[ColumnSelected][row] = player
+      break 
+  print(gamestate)
+  return()
+
+   
+#window = Screen()
+def getClickCoord(x,y):
+  #print(x,y)
+  XCoordinate = x
+  YCoordinate = y
+  numrows=6
+  numcols=7
+  rectwidth= numcols*100+20*(numcols+1)
+  rectheight=numrows*100+20*(numrows+1)
+  WidthScreen = rectwidth
+  HeightScreen = rectheight
+  #print(WidthScreen,HeightScreen)
+  YUpperLimitCoordinate = HeightScreen // 2
+  YLowerLimitCoordinate = HeightScreen // 2 - 0.2 * HeightScreen // 2
+  XCoordinateLeftLimit = 0 - WidthScreen//2 
+  XCoordinateRightLimit = 0 + WidthScreen//2
+  distFromLeft= XCoordinate - XCoordinateLeftLimit
+  #print(distFromLeft)
+  #print(YLowerLimitCoordinate,YUpperLimitCoordinate)
+  #print(XCoordinateLeftLimit,XCoordinateRightLimit)
+  colWidth = WidthScreen // numcols
+  ColumnSelected = distFromLeft // colWidth
+  #print(colWidth)
+  print(ColumnSelected)
+  droppiece(ColumnSelected)
+  return()
+    
+
+window = Screen()
+window.listen()
+
+
+
+#Creates Matrix
+c0=[];c1=[];c2=[];c3=[];c4=[];c5=[];c6=[]
+for i in range(6):
+   c0.append(0)
+   c1.append(0)
+   c2.append(0)
+   c3.append(0)
+   c4.append(0)
+   c5.append(0)
+   c6.append(0)
+global gamestate
+gamestate = [c0,c1,c2,c3,c4,c5,c6]
+create_game_board()
+update()
+
+
+#Colors pieces
+def piececolor():
+  pu()
+  numrows=6
+  numcols=7
+  rectwidth= numcols*100+20*(numcols+1)
+  rectheight=numrows*100+20*(numrows+1)
+  xoffset = rectwidth//2
+  yoffset = rectheight//2
+  for row in range (6):
+    for col in range (7):     
+      xcoord = col*120+70
+      ycoord = row*120+20
+      pu()
+      goto(xcoord-xoffset,ycoord-yoffset)
+      if (gamestate[col][row] == 1):
+        fillcolor("red")
+        pd()
+        begin_fill()
+        circle(50)
+        end_fill()
+      elif(gamestate[col][row] == 2):
+        fillcolor("yellow")
+        pd()
+        begin_fill()
+        circle(50)
+        end_fill()
+  return()
+
+
+global player
+player = 1
+while (not Player1Win and not Player2Win):
+  window.onclick(getClickCoord,1)
+  piececolor()
+  Player1Win,Player2Win = check_win_vert(gamestate,Player1Win,Player2Win)
+  Player1Win,Player2Win = check_horizontal_win(gamestate,Player1Win,Player2Win)
+  Player1Win,Player2Win = FourInARowDownRight(gamestate,Player1Win,Player2Win)
+  # print (Player1Win)
+  # print (Player2Win)
+  Player1Win,Player2Win = FourInARowDownLeft(gamestate,Player1Win,Player2Win)
+  update()
