@@ -1,0 +1,99 @@
+from turtle import *
+from random import *
+#*************************************
+head_start_x, head_start_y = 0, 0
+head_width, head_height = 300, 300
+mouth_x, mouth_y = 75, 100
+mouth_r = 100
+mouth_extent = 90
+nose_x,nose_y = 175, 130
+nose_length = 50
+eyes_x, eyes_y = 42, 270
+eyes_width, eyes_height = 75, 60
+eye_separation = 140
+eyes_pct_open = 100
+frame = 0
+#**************************************
+def head(x,y,w,h):
+  penup()
+  setheading(0)
+  goto(x,y)
+  pendown()
+  forward(w)
+  left(90)
+  forward(h)
+  left(90)
+  forward(w)
+  left(90)
+  forward(h)
+  pendown()
+  return()
+def mouth(x,y,r,extent):
+  penup()
+  setheading(-45)
+  goto(x,y)
+  pendown()
+  circle(r,extent)
+  penup()
+  return()
+def nose(x,y,length):
+  penup()
+  goto(x,y)
+  setheading(-60)
+  pendown()
+  for i in range (3):
+    right(120)
+    forward(length)
+  penup()
+  return()
+def eyes(x,y,w,h,eye_separation, pct_open):
+  color_list = ["black", "brown", "red", "yellow", "green", "orange", "blue"]
+  for i in range(2):
+    penup()
+    goto(x + i*eye_separation,y)  #top left corner of left eye
+    setheading(0)
+    pendown()
+    forward(w)
+    right(90)
+    forward(h)
+    right(90)
+    forward(w)
+    right(90)
+    forward(h)
+  for i in range(2):  
+    penup()
+    goto(x + i*eye_separation,y) # top left corner of left eye 
+    setheading(0)
+    fillcolor(choice(color_list))
+    begin_fill()
+    pendown()
+    forward(w)
+    right(90)
+    forward(h* (1 - 0.01* pct_open))
+    right(90)
+    forward(w)
+    right(90)
+    forward(h * (1 - 0.01* pct_open))
+    end_fill()
+  return()
+#def ears()
+#**************************************
+hideturtle()
+tracer(0,0)
+while(True):
+  frame+=1 # update the frame counter
+  clear() # clear the current drawing
+  #draw the head
+  head(head_start_x,head_start_y,head_width,head_height)
+   #draw the mouth
+  mouth(mouth_x,mouth_y,mouth_r,mouth_extent)
+  #draw the nose
+  nose(nose_x,nose_y,nose_length)
+  #draw the eyes
+  eyes_pct_open = randint(0,100)
+  eyes(eyes_x,eyes_y,eyes_width,eyes_height,eye_separation,eyes_pct_open)
+  # update the screen with current drawing
+  update() 
+  # short delay for brain to process the image
+  delay(100) 
+done()
