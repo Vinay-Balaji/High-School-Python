@@ -1,0 +1,73 @@
+################################
+# Guess the Magic Number!
+#By: Vinay Balaji
+################################
+import time
+from random import* 
+import sys
+from math import*
+timeAllowed = [60,15,14,13,12,11,10,9,8,7]
+numGuesses = [1000,15,14,13,12,11,10,9,8,7]
+guessRange = [(0,10),(0,100),(0,100),(0,100),(0,100),(0,100),(0,100),(0,100),(0,100),(0,100)]
+messages = ["Great Job!!!!","Amazing Job!!!", "Wow! That was fantastic","Terrific Job!", "You deserve an applause", "Congrats! You are superman!",""]
+timeMessages = ["You ran out of time slow-poke!", "Your too slow! Better luck next time!","Oof you ran out of time"]
+def getGameParms (startingLvl):
+  lowRange = guessRange[startingLvl-1][0]
+  highRange = guessRange[startingLvl-1][1]
+  guessesAllowed = numGuesses [startingLvl-1]
+  allowedTime = timeAllowed[startingLvl-1]
+  return (lowRange, highRange, guessesAllowed, allowedTime)
+
+def calcEndTime (allowedTime):
+  currentTime=time.time()
+  endTime = currentTime + allowedTime
+  return(endTime)
+def getStartingLvl():
+  startingLvl = int(input("Enter the level of difficulty that you want (1-10) of the difficulty that you want: "))#Ask the user of what difficulty they want
+  return (startingLvl)
+
+def displayScore(numGuesses,guessesAllowed,leaveLoop):
+  if guessesAllowed == numGuesses:
+    print("You have used all of your attempts! Better Luck next time!")
+  elif numGuesses < 3:
+    print(messages[randint(0,len(messages)-1)])
+    print("it took you",numGuesses," tries!")
+
+def game():
+  startingLvl = getStartingLvl()
+  lowRange, highRange, guessesAllowed, allowedTime = getGameParms(startingLvl)
+  endTime = calcEndTime(allowedTime)
+  if startingLvl == 1:
+    print("Enter a number between", lowRange, "and", highRange,"Good Luck")
+    print("Keep in mind you have", allowedTime, "seconds and unlimited attempts! :D ")
+  else:
+    print('Enter a number between', lowRange, 'and', highRange,"Good Luck")
+    print("Keep in mind you have", guessesAllowed, "seconds and attempts :D ")
+  magicNumber = randint(lowRange,highRange)
+  userguess = -1
+  numGuesses = 0
+  while((userguess != magicNumber) and (numGuesses < guessesAllowed) and (time.time() <= endTime)):
+    numGuesses = numGuesses + 1
+    userGuess = int(input("Enter your guess: "))
+    if(magicNumber > userGuess):
+      print("The number is higher!")
+    elif(magicNumber < userGuess):
+      print("The number is lower! ")
+    if(magicNumber == userGuess):
+      print(messages[randint(0,len(messages)-1)])
+      print("It took you,",numGuesses," tries!")
+    if(userGuess > timeAllowed):
+      print(timeMessages[randint(0,len(timeMessages)-1)])
+    if (magicNumber == userGuess):
+      leaveLoop = "Horray! you got the right answer"
+      break
+    if (numGuesses == guessesAllowed):
+      leaveLoop = "Sorry you ran out of guesses"
+      break
+    if(time.time() >= endTime):
+      leaveLoop = "You ran out of time!!!!"
+      print(timeMessages[randint(0,len(timeMessages)-1)])
+      break
+  displayScore(numGuesses,guessesAllowed,leaveLoop)
+  return (numGuesses,leaveLoop)
+numGuesses, leaveLoop = game()
