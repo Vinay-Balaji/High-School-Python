@@ -1,0 +1,59 @@
+# By: Vinay Balaji
+# Sorting Lab 
+#
+from random import randint#python library that generates numbers  
+#
+UnsortedList= []#first unsorted list 
+Unsorted2 = []#second unsorted list used for the selection sort 
+#
+def generateList(num,lo,hi,n):
+  for p in range(n):
+    rand_num = randint(lo,hi)#This generates the list 
+    num.append(rand_num)
+  return (num)
+#
+def sortList(list):#Used BubbleSort04 example from the textbook
+  n = len(UnsortedList)#Used BubbleSort04 example from the textbook
+  for p in range(1,n):#Used BubbleSort04 example from the textbook
+    for q in range(n-p):#Used BubbleSort04 example from the textbook
+      if (UnsortedList[q] > UnsortedList[q + 1]):#Used BubbleSort04 example from the textbook
+        temp = UnsortedList[q]#Used BubbleSort04 example from the textbook
+        UnsortedList[q] = UnsortedList[q + 1]#Used BubbleSort04 example from the textbook
+        UnsortedList[q + 1] = temp#Used BubbleSort04 example from the textbook
+#
+def displayList(list):# I used the "count" variable that basically counts to when the numbers of elements is 15 it creates a new line.
+  countvar = 0
+  for num in list:
+    print(num,end = " ")
+    countvar += 1
+    if (countvar % 15 == 0):
+      print("")#creates a space between the lines 
+  print("")#creates a space between the lines 
+#
+def swap(num2,x,y):#used SelectionSort03 example from textbook
+  temp2 = num2[x]
+  num2[x] = num2[y]
+  num2[y] = temp2
+#
+def SelectionSort(num2):#used SelectionSort03 example from textbook
+  n = len(num2)
+  for p in range(0,n-1):
+    Max = p
+    for q in range(p,n):
+      if (num2[q] > num2[Max]):
+        Max = q
+    swap(num2,Max,p)#used SelectionSort03 example from textbook
+lo = 1000# from student starting file 
+hi = 9999
+size = 100
+generateList2 = generateList(UnsortedList,lo,hi,size)
+Selection_Random = generateList2
+displayList(generateList2)
+print()
+sortList(generateList2)
+print()
+displayList(generateList2)
+#
+SelectionSort(Selection_Random)
+print("")
+displayList(Selection_Random)
