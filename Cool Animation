@@ -1,0 +1,37 @@
+#*********************
+#BY: Vinay Balaji
+#*********************
+from turtle import*
+#*********************
+v = -100
+b = 0
+#*********************
+def screen_color():
+ tj = Screen() 
+ tj.bgcolor('black')
+hideturtle()
+tracer(0)
+screen_color()
+while(True): 
+ clear()
+ penup()
+ goto(v,b)
+ pendown()
+ color_list = ["white", "brown", "red", "yellow", "green", "orange", "blue"]
+ #fillcolor(color_list)
+ fillcolor('white')
+ begin_fill()
+ for x in range(4):
+   right(90)
+   forward(60)
+   circle(10)
+   forward(60)
+   circle(20)
+   forward(60)
+   circle(30)
+ end_fill()
+ v +=4
+ b +=4 
+ update()
+ delay(100)
+
